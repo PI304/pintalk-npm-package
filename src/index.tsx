@@ -1,19 +1,8 @@
-import * as React from 'react'
-import './styles.scss'
+import * as React from 'react';
+import WidgetContainer from './components/WidgetContainer';
 
-const Counter: React.FC<{
-    className: string
-}> = ({className }) => (
-    <div className={`counter ${className}`}>
-    </div>
-)
+const App = () => {
+  return <WidgetContainer />;
+};
 
-export type ICounterProps = {
-    className?: string
-}
-
-const App: React.FC<ICounterProps> = ({ className = '' }) => {
-    return <Counter className={className}/>
-}
-
-export default App
+export default App;

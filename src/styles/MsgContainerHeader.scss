@@ -1,0 +1,60 @@
+.MsgContainerHeader {
+  background-color: #ffffff;
+  height: 8.8%;
+  top: 0;
+  left: 0;
+  box-shadow: 0 4px 4px rgba(222, 222, 222, 0.2);
+  border-radius: 10px 10px 0 0;
+}
+
+.MsgContainerHeaderLogo {
+  width: 15%;
+  display: flex;
+  justify-content: center;
+  height: 1.12rem;
+  align-items: center;
+  padding: 1.1rem 0 1.1rem 0;
+  float: left;
+}
+
+.MsgContainerHeaderContent {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  float: left;
+}
+
+.MsgContainerHeaderText {
+  @include regular1;
+  text-align: center;
+  margin: 0 0.3rem 0 0;
+  color: $black;
+}
+
+.MsgContainerHeaderOnOff {
+  @include regular0675;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 0 0.3rem;
+  float: right;
+  color: $gray;
+  width: 3.43125rem;
+  height: 1.40625rem;
+  border: 0.04rem solid #DDDDDD;
+  border-radius: 2.25rem;
+}
+
+.MsgContainerHeaderMenu {
+  width: 15%;
+  display: flex;
+  justify-content: center;
+  height: 1.12rem;
+  right: 0;
+  align-items: center;
+  padding: 1.1rem 0 1.1rem 0;
+  float: left;
+}

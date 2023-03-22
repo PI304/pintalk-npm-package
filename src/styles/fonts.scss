@@ -1,0 +1,45 @@
+@font-face {
+  font-family: 'Pretendard';
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Medium.eot');
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Medium.eot?#iefix') format('embedded-opentype'),
+  url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Medium.woff2') format('woff2'),
+  url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Medium.woff') format('woff'),
+  url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Medium.ttf') format("truetype");
+  font-display: swap;
+}
+
+@mixin regular1 {
+  font-family: 'Pretendard', serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 150%;
+  letter-spacing: -0.02em
+}
+
+@mixin regular0675 {
+  font-family: 'Pretendard', serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.675rem;
+  line-height: 150%;
+  letter-spacing: -0.02em
+}
+
+@mixin regular08 {
+  font-family: 'Pretendard', serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.8rem;
+  line-height: 150%;
+  letter-spacing: -0.02em
+}
+
+@mixin regular05625 {
+  font-family: 'Pretendard', serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.5625rem;
+  line-height: 150%;
+  letter-spacing: -0.02em
+}

@@ -1,0 +1,17 @@
+.MsgContainerMain {
+  width: 100%;
+  height: 76%;
+  text-align: center;
+}
+
+.MsgContainerMainDate {
+  @include regular05625;
+  background-color: #ffffff;
+  padding: 0.225rem 0.675rem;
+  text-align: center;
+  border: 0.04rem solid #DDDDDD;
+  border-radius: 2.25rem;
+  color: $gray;
+  display: inline-block;
+  margin: 0.9rem auto 0.9rem auto;
+}
