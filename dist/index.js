@@ -149,6 +149,7 @@ var MsgContainerHeader = function () {
 };
 
 var MsgContainerFooter = function () {
+    var attr = React.useContext(Attribute);
     var _a = React.useState(), message = _a[0], setMessage = _a[1];
     var _b = React.useState('false'), hasValue = _b[0], setHasValue = _b[1];
     var onChangeMsgValue = function (e) {
@@ -158,7 +159,52 @@ var MsgContainerFooter = function () {
         else
             setHasValue('false');
     };
-    var onSendMsg = function () { };
+    var cookie = getCookie('name');
+    var onSendMsg = function () {
+        if (cookie === undefined) {
+            void createChat().then(function (r) {
+                r != null && setCookie('name', r.data.name, 7);
+            });
+        }
+        else {
+            console.log(cookie);
+        }
+    };
+    var createChat = function () { return __awaiter(void 0, void 0, void 0, function () {
+        var error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, axios__default["default"].post('http://3.34.7.189/api/chat/', {}, {
+                            headers: {
+                                Accept: 'application/json; version=1',
+                                'X-PinTalk-Access-Key': attr === null || attr === void 0 ? void 0 : attr.accessKey,
+                                'X-PinTalk-Secret-Key': attr === null || attr === void 0 ? void 0 : attr.secretKey,
+                            },
+                        })];
+                case 1: return [2 /*return*/, _a.sent()];
+                case 2:
+                    error_1 = _a.sent();
+                    console.log(error_1);
+                    if (error_1.response.data.code === 401) {
+                        throw new Error(error_1.response.data.detail);
+                    }
+                    throw new Error(error_1.response.data.detail);
+                case 3: return [2 /*return*/];
+            }
+        });
+    }); };
+    var setCookie = function (name, value, exp) {
+        var date = new Date();
+        date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
+        document.cookie =
+            name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+    };
+    function getCookie(name) {
+        var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+        return value != null ? value[2] : null;
+    }
     return (React__namespace.createElement("div", { className: 'MsgContainerFooter' },
         React__namespace.createElement("div", { className: 'MsgContainerFooterTextBox' },
             React__namespace.createElement("div", { className: 'MsgContainerFooterText' },
@@ -183,32 +229,17 @@ var WidgetContainer = function () {
     var onShowMessageContainer = function () {
         setWidgetOpen(!widgetOpen);
     };
-    // const cookie = getCookie('guest');
-    // if (cookie === null) {
-    //     setCookie('guest', r.data.guest, 7);
-    // }
-    //
-    // const setCookie = (name: string, value: string, exp: number) => {
-    //   const date = new Date();
-    //   date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
-    //   document.cookie =
-    //     name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
-    // };
-    //
-    // function getCookie(name: string) {
-    //   const value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-    //   return value != null ? value[2] : null;
-    // }
     return (React__namespace.createElement(React__namespace.Fragment, null,
         React__namespace.createElement("div", { className: 'WidgetContainer', onClick: onShowMessageContainer }, widgetOpen ? CloseLogo : OpenLogo),
         widgetOpen && React__namespace.createElement(MsgContainer, null)));
 };
 
 var Client = React__namespace.createContext(undefined);
+var Attribute = React__namespace.createContext(undefined);
 var App = function (obj) {
     var _a = React.useState(), client = _a[0], setClient = _a[1];
     var clientInit = function (obj) { return __awaiter(void 0, void 0, void 0, function () {
-        var res, error_1;
+        var error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -220,9 +251,7 @@ var App = function (obj) {
                                 'X-PinTalk-Secret-Key': obj.secretKey,
                             },
                         })];
-                case 1:
-                    res = _a.sent();
-                    return [2 /*return*/, res];
+                case 1: return [2 /*return*/, _a.sent()];
                 case 2:
                     error_1 = _a.sent();
                     console.log(error_1);
@@ -240,9 +269,11 @@ var App = function (obj) {
         });
     }, []);
     return (React__namespace.createElement(Client.Provider, { value: client },
-        React__namespace.createElement(WidgetContainer, null)));
+        React__namespace.createElement(Attribute.Provider, { value: obj },
+            React__namespace.createElement(WidgetContainer, null))));
 };
 
+exports.Attribute = Attribute;
 exports.Client = Client;
 exports["default"] = App;
 //# sourceMappingURL=index.js.map

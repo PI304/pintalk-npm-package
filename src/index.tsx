@@ -3,17 +3,9 @@ import { useEffect, useState } from 'react';
 import WidgetContainer from './components/WidgetContainer';
 import axios from 'axios';
 
-interface attribute {
-  accessKey: string;
-  secretKey: string;
-  theme?: string;
-}
-
-interface clientResult {
-  serviceName: string;
-}
-
 export const Client = React.createContext<clientResult | undefined>(undefined);
+export const Attribute = React.createContext<attribute | undefined>(undefined);
+
 const App = (obj: attribute) => {
   const [client, setClient] = useState<clientResult>();
   const clientInit = async (obj: attribute) => {
@@ -42,7 +34,9 @@ const App = (obj: attribute) => {
 
   return (
     <Client.Provider value={client}>
-      <WidgetContainer />
+      <Attribute.Provider value={obj}>
+        <WidgetContainer />
+      </Attribute.Provider>
     </Client.Provider>
   );
 };
