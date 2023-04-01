@@ -1,3 +1,12 @@
-/// <reference types="react" />
-declare const App: (accessKey: string, secretKey: string) => JSX.Element;
+import * as React from 'react';
+interface attribute {
+    accessKey: string;
+    secretKey: string;
+    theme?: string;
+}
+interface clientResult {
+    serviceName: string;
+}
+export declare const Client: React.Context<clientResult | undefined>;
+declare const App: (obj: attribute) => JSX.Element;
 export default App;

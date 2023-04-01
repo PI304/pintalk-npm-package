@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import {useState} from 'react';
 
 const MsgContainerFooter = () => {
   const [message, setMessage] = useState<string>();
@@ -11,26 +11,28 @@ const MsgContainerFooter = () => {
     else setHasValue('false');
   };
 
-  const onSendMsg = () => {};
+  const onSendMsg = () => {
+
+  };
 
   return (
-    <div className={'MsgContainerFooter'}>
-      <div className={'MsgContainerFooterTextBox'}>
-        <div className={'MsgContainerFooterText'}>
+      <div className={'MsgContainerFooter'}>
+        <div className={'MsgContainerFooterTextBox'}>
+          <div className={'MsgContainerFooterText'}>
           <textarea
-            value={message}
-            onChange={onChangeMsgValue}
-            placeholder={'메시지 작성하기'}
+              value={message}
+              onChange={onChangeMsgValue}
+              placeholder={'메시지 작성하기'}
           />
-        </div>
-        <div
-          className={`MsgContainerFooterSendBtn ${hasValue}`}
-          onClick={onSendMsg}
-        >
-          전송
+          </div>
+          <div
+              className={`MsgContainerFooterSendBtn ${hasValue}`}
+              onClick={onSendMsg}
+          >
+            전송
+          </div>
         </div>
       </div>
-    </div>
   );
 };
 

@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "@rollup/plugin-image": "^3.0.2",
+    "axios": "^1.0.0",
     "eslint-config-prettier": "^8.7.0"
   }
 }
