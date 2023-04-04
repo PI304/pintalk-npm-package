@@ -29,7 +29,7 @@ const MsgContainerFooter = () => {
   const createChat = async () => {
     try {
       return await axios.post(
-        'http://3.34.7.189/api/chat/',
+        'https://api.pintalk.app/api/chat/',
         {},
         {
           headers: {

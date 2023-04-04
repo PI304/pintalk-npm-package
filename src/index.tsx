@@ -10,7 +10,7 @@ const App = (obj: attribute) => {
   const [client, setClient] = useState<clientResult>();
   const clientInit = async (obj: attribute) => {
     try {
-      return await axios.get('http://3.34.7.189/api/users/client', {
+      return await axios.get('https://api.pintalk.app/api/users/client', {
         headers: {
           Accept: 'application/json; version=1',
           'X-PinTalk-Access-Key': obj.accessKey,
