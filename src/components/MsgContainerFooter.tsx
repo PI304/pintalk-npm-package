@@ -6,24 +6,12 @@ import axios from 'axios';
 const MsgContainerFooter = () => {
   const attr = useContext(Attribute);
   const [message, setMessage] = useState<string>();
-  const [hasValue, setHasValue] = useState<string>('false');
+  const [hasValue, setHasValue] = useState<boolean>(false);
 
   const onChangeMsgValue = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
-    if (e.target.value.length !== 0) setHasValue('true');
-    else setHasValue('false');
-  };
-
-  const cookie = getCookie('name');
-
-  const onSendMsg = () => {
-    if (cookie === undefined) {
-      void createChat().then((r) => {
-        r != null && setCookie('name', r.data.name, 7);
-      });
-    } else {
-      console.log(cookie);
-    }
+    if (e.target.value.length !== 0) setHasValue(true);
+    else setHasValue(false);
   };
 
   const createChat = async () => {
@@ -55,10 +43,25 @@ const MsgContainerFooter = () => {
       name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
   };
 
-  function getCookie(name: string) {
+  const getCookie = (name: string) => {
     const value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
     return value != null ? value[2] : null;
-  }
+  };
+
+  const onSendMsg = () => {
+    const cookie = getCookie('name');
+    if (cookie === undefined) {
+      void createChat().then((r) => {
+        r != null && setCookie('name', r.data.name, 7);
+      });
+    } else {
+      console.log(cookie);
+    }
+  };
+
+  const btnTextColor = {
+    color: hasValue ? '#2F80ED' : '#A7A7A7',
+  };
 
   return (
     <div className={'MsgContainerFooter'}>
@@ -71,8 +74,9 @@ const MsgContainerFooter = () => {
           />
         </div>
         <div
-          className={`MsgContainerFooterSendBtn ${hasValue}`}
-          onClick={onSendMsg}
+          className={'MsgContainerFooterSendBtn'}
+          onClick={hasValue ? onSendMsg : undefined}
+          style={btnTextColor}
         >
           전송
         </div>

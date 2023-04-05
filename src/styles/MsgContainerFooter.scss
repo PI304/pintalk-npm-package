@@ -37,12 +37,4 @@
   @include regular08;
   width: 10%;
   float: left;
-
-  &.false {
-    color: $lightGray;
-  }
-
-  &.true {
-    color: $blue;
-  }
 }
