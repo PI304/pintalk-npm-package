@@ -148,10 +148,57 @@ var MsgContainerHeader = function () {
         React__namespace.createElement("div", { className: 'MsgContainerHeaderMenu' })));
 };
 
+var SocketClient = /** @class */ (function () {
+    function SocketClient(cookie) {
+        this.socket = new WebSocket("wss://api.pintalk.app/ws/chat/".concat(cookie, "/"));
+        // this.onMessageCallback = null;
+    }
+    SocketClient.prototype.getDatetime = function () {
+        var now = new Date();
+        now.setHours(now.getHours() + 9);
+        return now.toISOString().substring(0, 19);
+    };
+    SocketClient.prototype.sendMessage = function (data) {
+        if (this.socket != null) {
+            var message = JSON.stringify({
+                type: 'chat_message',
+                is_host: false,
+                message: data,
+                datetime: this.getDatetime(),
+            });
+            console.log('Sending message:', message);
+            this.socket.send(message);
+        }
+        else {
+            console.log('Socket is not connected');
+        }
+    };
+    // setOnMessageCallback(callback: (data: any) => void) {
+    //   this.onMessageCallback = callback;
+    // }
+    SocketClient.prototype.disconnect = function () {
+        if (this.socket != null) {
+            this.socket.close();
+            this.socket = null;
+            console.log('Socket disconnected');
+        }
+    };
+    return SocketClient;
+}());
+
 var MsgContainerFooter = function () {
+    var getCookie = function (name) {
+        var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+        return value != null ? value[2] : null;
+    };
+    var _a = React.useState(), socketClient = _a[0], setSocketClient = _a[1];
+    var _b = React.useState(getCookie('name') != null ? getCookie('name') : null), roomName = _b[0], setRoomName = _b[1];
+    React.useEffect(function () {
+        setSocketClient(roomName != null ? new SocketClient(roomName) : null);
+    }, []);
     var attr = React.useContext(Attribute);
-    var _a = React.useState(), message = _a[0], setMessage = _a[1];
-    var _b = React.useState(false), hasValue = _b[0], setHasValue = _b[1];
+    var _c = React.useState(), message = _c[0], setMessage = _c[1];
+    var _d = React.useState(false), hasValue = _d[0], setHasValue = _d[1];
     var onChangeMsgValue = function (e) {
         setMessage(e.target.value);
         if (e.target.value.length !== 0)
@@ -190,20 +237,18 @@ var MsgContainerFooter = function () {
         document.cookie =
             name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
     };
-    var getCookie = function (name) {
-        var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-        return value != null ? value[2] : null;
+    var onCreateChat = function () {
+        void createChat().then(function (r) {
+            if (r != null) {
+                setCookie('name', r.data.name, 7);
+                setRoomName(getCookie('name'));
+                setSocketClient(new SocketClient(r.data.name));
+            }
+            socketClient === null || socketClient === void 0 ? void 0 : socketClient.sendMessage(message);
+        });
     };
     var onSendMsg = function () {
-        var cookie = getCookie('name');
-        if (cookie === undefined) {
-            void createChat().then(function (r) {
-                r != null && setCookie('name', r.data.name, 7);
-            });
-        }
-        else {
-            console.log(cookie);
-        }
+        socketClient === null || socketClient === void 0 ? void 0 : socketClient.sendMessage(message);
     };
     var btnTextColor = {
         color: hasValue ? '#2F80ED' : '#A7A7A7',
@@ -212,7 +257,7 @@ var MsgContainerFooter = function () {
         React__namespace.createElement("div", { className: 'MsgContainerFooterTextBox' },
             React__namespace.createElement("div", { className: 'MsgContainerFooterText' },
                 React__namespace.createElement("textarea", { value: message, onChange: onChangeMsgValue, placeholder: '메시지 작성하기' })),
-            React__namespace.createElement("div", { className: 'MsgContainerFooterSendBtn', onClick: hasValue ? onSendMsg : undefined, style: btnTextColor }, "\uC804\uC1A1"))));
+            React__namespace.createElement("div", { className: 'MsgContainerFooterSendBtn', onClick: hasValue ? (roomName != null ? onSendMsg : onCreateChat) : undefined, style: btnTextColor }, "\uC804\uC1A1"))));
 };
 
 var MsgContainerMain = function () {
