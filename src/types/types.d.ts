@@ -7,3 +7,7 @@ type attribute = {
   secretKey: string;
   theme: string | 'basic';
 };
+
+type chatResult = {
+  name: string;
+};

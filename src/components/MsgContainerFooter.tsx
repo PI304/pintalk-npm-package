@@ -1,9 +1,24 @@
 import * as React from 'react';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Attribute } from '../index';
-import axios from 'axios';
+import axios, { type AxiosResponse } from 'axios';
+import SocketClient from '../socket/SocketClient';
 
 const MsgContainerFooter = () => {
+  const getCookie = (name: string) => {
+    const value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+    return value != null ? value[2] : null;
+  };
+
+  const [socketClient, setSocketClient] = useState<SocketClient | null>();
+  const [roomName, setRoomName] = useState<string | null>(
+    getCookie('name') != null ? getCookie('name') : null
+  );
+
+  useEffect(() => {
+    setSocketClient(roomName != null ? new SocketClient(roomName) : null);
+  }, []);
+
   const attr = useContext(Attribute);
   const [message, setMessage] = useState<string>();
   const [hasValue, setHasValue] = useState<boolean>(false);
@@ -43,20 +58,19 @@ const MsgContainerFooter = () => {
       name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
   };
 
-  const getCookie = (name: string) => {
-    const value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-    return value != null ? value[2] : null;
+  const onCreateChat = () => {
+    void createChat().then((r: AxiosResponse<chatResult>) => {
+      if (r != null) {
+        setCookie('name', r.data.name, 7);
+        setRoomName(getCookie('name'));
+        setSocketClient(new SocketClient(r.data.name));
+      }
+      socketClient?.sendMessage(message);
+    });
   };
 
   const onSendMsg = () => {
-    const cookie = getCookie('name');
-    if (cookie === undefined) {
-      void createChat().then((r) => {
-        r != null && setCookie('name', r.data.name, 7);
-      });
-    } else {
-      console.log(cookie);
-    }
+    socketClient?.sendMessage(message);
   };
 
   const btnTextColor = {
@@ -75,7 +89,9 @@ const MsgContainerFooter = () => {
         </div>
         <div
           className={'MsgContainerFooterSendBtn'}
-          onClick={hasValue ? onSendMsg : undefined}
+          onClick={
+            hasValue ? (roomName != null ? onSendMsg : onCreateChat) : undefined
+          }
           style={btnTextColor}
         >
           전송
