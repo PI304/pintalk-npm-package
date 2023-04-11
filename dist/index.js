@@ -148,6 +148,17 @@ var MsgContainerHeader = function () {
         React__namespace.createElement("div", { className: 'MsgContainerHeaderMenu' })));
 };
 
+var setCookie = function (name, value, exp) {
+    var date = new Date();
+    date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
+    document.cookie =
+        name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+};
+var getCookie = function (name) {
+    var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+    return value != null ? value[2] : null;
+};
+
 var SocketClient = /** @class */ (function () {
     function SocketClient(cookie) {
         this.socket = new WebSocket("wss://api.pintalk.app/ws/chat/".concat(cookie, "/"));
@@ -159,7 +170,7 @@ var SocketClient = /** @class */ (function () {
         return now.toISOString().substring(0, 19);
     };
     SocketClient.prototype.sendMessage = function (data) {
-        if (this.socket != null) {
+        if (this.socket != null && this.socket.readyState === WebSocket.OPEN) {
             var message = JSON.stringify({
                 type: 'chat_message',
                 is_host: false,
@@ -177,7 +188,7 @@ var SocketClient = /** @class */ (function () {
     //   this.onMessageCallback = callback;
     // }
     SocketClient.prototype.disconnect = function () {
-        if (this.socket != null) {
+        if (this.socket != null && this.socket.readyState === WebSocket.OPEN) {
             this.socket.close();
             this.socket = null;
             console.log('Socket disconnected');
@@ -186,19 +197,11 @@ var SocketClient = /** @class */ (function () {
     return SocketClient;
 }());
 
-var MsgContainerFooter = function () {
-    var getCookie = function (name) {
-        var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-        return value != null ? value[2] : null;
-    };
-    var _a = React.useState(), socketClient = _a[0], setSocketClient = _a[1];
-    var _b = React.useState(getCookie('name') != null ? getCookie('name') : null), roomName = _b[0], setRoomName = _b[1];
-    React.useEffect(function () {
-        setSocketClient(roomName != null ? new SocketClient(roomName) : null);
-    }, []);
+var MsgContainerFooter = function (_a) {
+    var roomName = _a.roomName, setRoomName = _a.setRoomName, socketClient = _a.socketClient, setSocketClient = _a.setSocketClient;
     var attr = React.useContext(Attribute);
-    var _c = React.useState(), message = _c[0], setMessage = _c[1];
-    var _d = React.useState(false), hasValue = _d[0], setHasValue = _d[1];
+    var _b = React.useState(), message = _b[0], setMessage = _b[1];
+    var _c = React.useState(false), hasValue = _c[0], setHasValue = _c[1];
     var onChangeMsgValue = function (e) {
         setMessage(e.target.value);
         if (e.target.value.length !== 0)
@@ -231,12 +234,6 @@ var MsgContainerFooter = function () {
             }
         });
     }); };
-    var setCookie = function (name, value, exp) {
-        var date = new Date();
-        date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
-        document.cookie =
-            name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
-    };
     var onCreateChat = function () {
         void createChat().then(function (r) {
             if (r != null) {
@@ -265,11 +262,25 @@ var MsgContainerMain = function () {
         React__namespace.createElement("span", { className: 'MsgContainerMainDate' }, "3/15(\uC218)")));
 };
 
+// import { type MsgContainerProps } from '../types/props';
 var MsgContainer = function () {
+    var _a = React.useState(getCookie('name') != null ? getCookie('name') : null), roomName = _a[0], setRoomName = _a[1];
+    var _b = React.useState(null), socketClient = _b[0], setSocketClient = _b[1];
+    React.useEffect(function () {
+        var socketClientInstance = roomName != null ? new SocketClient(roomName) : null;
+        setSocketClient(socketClientInstance);
+        return function () {
+            socketClientInstance === null || socketClientInstance === void 0 ? void 0 : socketClientInstance.disconnect();
+        };
+    }, []);
+    // useEffect(() => {
+    //     console.log(isOpen);
+    //     !isOpen && socketClient?.disconnect();
+    // }, [isOpen]);
     return (React__namespace.createElement("div", { className: 'MsgContainer' },
         React__namespace.createElement(MsgContainerHeader, null),
         React__namespace.createElement(MsgContainerMain, null),
-        React__namespace.createElement(MsgContainerFooter, null)));
+        React__namespace.createElement(MsgContainerFooter, { roomName: roomName, setRoomName: setRoomName, socketClient: socketClient, setSocketClient: setSocketClient })));
 };
 
 var WidgetContainer = function () {

@@ -1,24 +1,16 @@
 import * as React from 'react';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { Attribute } from '../index';
 import axios, { type AxiosResponse } from 'axios';
-import SocketClient from '../socket/SocketClient';
+import { SocketClient, setCookie, getCookie } from '../utils';
+import { type MsgContainerFooterProps } from '../types/props';
 
-const MsgContainerFooter = () => {
-  const getCookie = (name: string) => {
-    const value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-    return value != null ? value[2] : null;
-  };
-
-  const [socketClient, setSocketClient] = useState<SocketClient | null>();
-  const [roomName, setRoomName] = useState<string | null>(
-    getCookie('name') != null ? getCookie('name') : null
-  );
-
-  useEffect(() => {
-    setSocketClient(roomName != null ? new SocketClient(roomName) : null);
-  }, []);
-
+const MsgContainerFooter = ({
+  roomName,
+  setRoomName,
+  socketClient,
+  setSocketClient,
+}: MsgContainerFooterProps) => {
   const attr = useContext(Attribute);
   const [message, setMessage] = useState<string>();
   const [hasValue, setHasValue] = useState<boolean>(false);
@@ -49,13 +41,6 @@ const MsgContainerFooter = () => {
       }
       throw new Error(error.response.data.detail);
     }
-  };
-
-  const setCookie = (name: string, value: string, exp: number) => {
-    const date = new Date();
-    date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
-    document.cookie =
-      name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
   };
 
   const onCreateChat = () => {

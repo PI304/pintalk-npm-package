@@ -1,4 +1,4 @@
-class SocketClient {
+export class SocketClient {
   private socket: WebSocket | null;
 
   constructor(cookie: string) {
@@ -13,7 +13,7 @@ class SocketClient {
   }
 
   sendMessage(data: any) {
-    if (this.socket != null) {
+    if (this.socket != null && this.socket.readyState === WebSocket.OPEN) {
       const message = JSON.stringify({
         type: 'chat_message',
         is_host: false,
@@ -32,12 +32,10 @@ class SocketClient {
   // }
 
   disconnect() {
-    if (this.socket != null) {
+    if (this.socket != null && this.socket.readyState === WebSocket.OPEN) {
       this.socket.close();
       this.socket = null;
       console.log('Socket disconnected');
     }
   }
 }
-
-export default SocketClient;
