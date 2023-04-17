@@ -1,4 +1,4 @@
 /// <reference types="react" />
 import { type MsgContainerFooterProps } from '../types/props';
-declare const MsgContainerFooter: ({ roomName, setRoomName, socketClient, setSocketClient, }: MsgContainerFooterProps) => JSX.Element;
+declare const MsgContainerFooter: ({ roomName, socketClient, }: MsgContainerFooterProps) => JSX.Element;
 export default MsgContainerFooter;

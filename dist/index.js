@@ -148,6 +148,37 @@ var MsgContainerHeader = function () {
         React__namespace.createElement("div", { className: 'MsgContainerHeaderMenu' })));
 };
 
+var MsgContainerFooter = function (_a) {
+    var roomName = _a.roomName, socketClient = _a.socketClient;
+    var _b = React.useState(), message = _b[0], setMessage = _b[1];
+    var _c = React.useState(false), hasValue = _c[0], setHasValue = _c[1];
+    var onChangeMsgValue = function (e) {
+        setMessage(e.target.value);
+        if (e.target.value.length !== 0)
+            setHasValue(true);
+        else
+            setHasValue(false);
+    };
+    var onSendMsg = function () {
+        socketClient === null || socketClient === void 0 ? void 0 : socketClient.sendMessage(message);
+    };
+    var btnTextColor = {
+        color: hasValue ? '#2F80ED' : '#A7A7A7',
+    };
+    return (React__namespace.createElement("div", { className: 'MsgContainerFooter' },
+        React__namespace.createElement("div", { className: 'MsgContainerFooterTextBox' },
+            React__namespace.createElement("div", { className: 'MsgContainerFooterText' },
+                React__namespace.createElement("textarea", { value: message, onChange: onChangeMsgValue, placeholder: '메시지 작성하기' })),
+            React__namespace.createElement("div", { className: 'MsgContainerFooterSendBtn', onClick: hasValue && roomName != null && socketClient != null
+                    ? onSendMsg
+                    : undefined, style: btnTextColor }, "\uC804\uC1A1"))));
+};
+
+var MsgContainerMain = function () {
+    return (React__namespace.createElement("div", { className: 'MsgContainerMain' },
+        React__namespace.createElement("span", { className: 'MsgContainerMainDate' }, "3/15(\uC218)")));
+};
+
 var setCookie = function (name, value, exp) {
     var date = new Date();
     date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
@@ -160,10 +191,42 @@ var getCookie = function (name) {
 };
 
 var SocketClient = /** @class */ (function () {
-    function SocketClient(cookie) {
-        this.socket = new WebSocket("wss://api.pintalk.app/ws/chat/".concat(cookie, "/"));
-        // this.onMessageCallback = null;
+    function SocketClient(cookie, name) {
+        this.uri = cookie;
+        this.socket = null;
+        this.name = name;
     }
+    SocketClient.prototype.connect = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, new Promise(function (resolve, reject) {
+                            _this.socket = new WebSocket("wss://api.pintalk.app/ws/chat/".concat(_this.uri, "/"));
+                            _this.socket.addEventListener('open', function () {
+                                console.log('Socket connected');
+                                console.log(_this.name);
+                                resolve();
+                            });
+                            _this.socket.addEventListener('error', function (error) {
+                                reject(error);
+                            });
+                            _this.socket.addEventListener('close', function (event) {
+                                console.log('Socket disconnected', event.wasClean, event.code, event.reason);
+                            });
+                            _this.socket.addEventListener('message', function (event) {
+                                var data = JSON.parse(event.data);
+                                console.log(_this.name);
+                                console.log('Socket received data:', data);
+                            });
+                        })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     SocketClient.prototype.getDatetime = function () {
         var now = new Date();
         now.setHours(now.getHours() + 9);
@@ -184,31 +247,19 @@ var SocketClient = /** @class */ (function () {
             console.log('Socket is not connected');
         }
     };
-    // setOnMessageCallback(callback: (data: any) => void) {
-    //   this.onMessageCallback = callback;
-    // }
     SocketClient.prototype.disconnect = function () {
         if (this.socket != null && this.socket.readyState === WebSocket.OPEN) {
             this.socket.close();
             this.socket = null;
-            console.log('Socket disconnected');
         }
     };
     return SocketClient;
 }());
 
-var MsgContainerFooter = function (_a) {
-    var roomName = _a.roomName, setRoomName = _a.setRoomName, socketClient = _a.socketClient, setSocketClient = _a.setSocketClient;
+var MsgContainer = function () {
     var attr = React.useContext(Attribute);
-    var _b = React.useState(), message = _b[0], setMessage = _b[1];
-    var _c = React.useState(false), hasValue = _c[0], setHasValue = _c[1];
-    var onChangeMsgValue = function (e) {
-        setMessage(e.target.value);
-        if (e.target.value.length !== 0)
-            setHasValue(true);
-        else
-            setHasValue(false);
-    };
+    var _a = React.useState(getCookie('name') != null ? getCookie('name') : null), roomName = _a[0], setRoomName = _a[1];
+    var _b = React.useState(null), socketClient = _b[0], setSocketClient = _b[1];
     var createChat = function () { return __awaiter(void 0, void 0, void 0, function () {
         var error_1;
         return __generator(this, function (_a) {
@@ -234,49 +285,26 @@ var MsgContainerFooter = function (_a) {
             }
         });
     }); };
-    var onCreateChat = function () {
-        void createChat().then(function (r) {
-            if (r != null) {
-                setCookie('name', r.data.name, 7);
-                setRoomName(getCookie('name'));
-                setSocketClient(new SocketClient(r.data.name));
-            }
-            socketClient === null || socketClient === void 0 ? void 0 : socketClient.sendMessage(message);
-        });
-    };
-    var onSendMsg = function () {
-        socketClient === null || socketClient === void 0 ? void 0 : socketClient.sendMessage(message);
-    };
-    var btnTextColor = {
-        color: hasValue ? '#2F80ED' : '#A7A7A7',
-    };
-    return (React__namespace.createElement("div", { className: 'MsgContainerFooter' },
-        React__namespace.createElement("div", { className: 'MsgContainerFooterTextBox' },
-            React__namespace.createElement("div", { className: 'MsgContainerFooterText' },
-                React__namespace.createElement("textarea", { value: message, onChange: onChangeMsgValue, placeholder: '메시지 작성하기' })),
-            React__namespace.createElement("div", { className: 'MsgContainerFooterSendBtn', onClick: hasValue ? (roomName != null ? onSendMsg : onCreateChat) : undefined, style: btnTextColor }, "\uC804\uC1A1"))));
-};
-
-var MsgContainerMain = function () {
-    return (React__namespace.createElement("div", { className: 'MsgContainerMain' },
-        React__namespace.createElement("span", { className: 'MsgContainerMainDate' }, "3/15(\uC218)")));
-};
-
-// import { type MsgContainerProps } from '../types/props';
-var MsgContainer = function () {
-    var _a = React.useState(getCookie('name') != null ? getCookie('name') : null), roomName = _a[0], setRoomName = _a[1];
-    var _b = React.useState(null), socketClient = _b[0], setSocketClient = _b[1];
     React.useEffect(function () {
-        var socketClientInstance = roomName != null ? new SocketClient(roomName) : null;
+        if (roomName == null) {
+            void createChat().then(function (r) { return __awaiter(void 0, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    if (r != null) {
+                        setCookie('name', r.data.name, 7);
+                        setRoomName(getCookie('name'));
+                    }
+                    return [2 /*return*/];
+                });
+            }); });
+        }
+        // TODO: 스트릭트 모드
+        var socketClientInstance = roomName != null ? new SocketClient(roomName, 'msgContainer') : null;
+        void (socketClientInstance === null || socketClientInstance === void 0 ? void 0 : socketClientInstance.connect());
         setSocketClient(socketClientInstance);
         return function () {
-            socketClientInstance === null || socketClientInstance === void 0 ? void 0 : socketClientInstance.disconnect();
+            void (socketClientInstance === null || socketClientInstance === void 0 ? void 0 : socketClientInstance.disconnect());
         };
-    }, []);
-    // useEffect(() => {
-    //     console.log(isOpen);
-    //     !isOpen && socketClient?.disconnect();
-    // }, [isOpen]);
+    }, [roomName]);
     return (React__namespace.createElement("div", { className: 'MsgContainer' },
         React__namespace.createElement(MsgContainerHeader, null),
         React__namespace.createElement(MsgContainerMain, null),
