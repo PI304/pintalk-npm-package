@@ -308,7 +308,7 @@ var MsgContainer = function () {
     return (React__namespace.createElement("div", { className: 'MsgContainer' },
         React__namespace.createElement(MsgContainerHeader, null),
         React__namespace.createElement(MsgContainerMain, null),
-        React__namespace.createElement(MsgContainerFooter, { roomName: roomName, setRoomName: setRoomName, socketClient: socketClient, setSocketClient: setSocketClient })));
+        React__namespace.createElement(MsgContainerFooter, { roomName: roomName, socketClient: socketClient })));
 };
 
 var WidgetContainer = function () {
