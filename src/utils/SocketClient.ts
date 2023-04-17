@@ -1,9 +1,43 @@
 export class SocketClient {
   private socket: WebSocket | null;
+  private readonly uri: string;
+  private readonly name: string;
 
-  constructor(cookie: string) {
-    this.socket = new WebSocket(`wss://api.pintalk.app/ws/chat/${cookie}/`);
-    // this.onMessageCallback = null;
+  constructor(cookie: string, name: string) {
+    this.uri = cookie;
+    this.socket = null;
+    this.name = name;
+  }
+
+  async connect() {
+    await new Promise<void>((resolve, reject) => {
+      this.socket = new WebSocket(`wss://api.pintalk.app/ws/chat/${this.uri}/`);
+
+      this.socket.addEventListener('open', () => {
+        console.log('Socket connected');
+        console.log(this.name);
+        resolve();
+      });
+
+      this.socket.addEventListener('error', (error) => {
+        reject(error);
+      });
+
+      this.socket.addEventListener('close', (event) => {
+        console.log(
+          'Socket disconnected',
+          event.wasClean,
+          event.code,
+          event.reason
+        );
+      });
+
+      this.socket.addEventListener('message', (event) => {
+        const data = JSON.parse(event.data);
+        console.log(this.name);
+        console.log('Socket received data:', data);
+      });
+    });
   }
 
   getDatetime() {
@@ -27,15 +61,10 @@ export class SocketClient {
     }
   }
 
-  // setOnMessageCallback(callback: (data: any) => void) {
-  //   this.onMessageCallback = callback;
-  // }
-
   disconnect() {
     if (this.socket != null && this.socket.readyState === WebSocket.OPEN) {
       this.socket.close();
       this.socket = null;
-      console.log('Socket disconnected');
     }
   }
 }
