@@ -60,12 +60,7 @@ const MsgContainer = () => {
     <div className={'MsgContainer'}>
       <MsgContainerHeader />
       <MsgContainerMain />
-      <MsgContainerFooter
-        roomName={roomName}
-        setRoomName={setRoomName}
-        socketClient={socketClient}
-        setSocketClient={setSocketClient}
-      />
+      <MsgContainerFooter roomName={roomName} socketClient={socketClient} />
     </div>
   );
 };
