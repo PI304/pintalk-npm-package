@@ -23,8 +23,8 @@
   },
   "homepage": "https://github.com/dmsthf2000/pintalk-npm-package#readme",
   "peerDependencies": {
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

@@ -5,9 +5,10 @@ import MsgContainerMain from './MsgContainerMain';
 import { useContext, useEffect, useState } from 'react';
 import { SocketClient, getCookie, setCookie } from '../utils';
 import axios, { type AxiosResponse } from 'axios';
-import { Attribute } from '../index';
+import { Attribute, Client } from '../index';
 
 const MsgContainer = () => {
+  const client = useContext(Client);
   const attr = useContext(Attribute);
   const [roomName, setRoomName] = useState<string | null>(
     getCookie('name') != null ? getCookie('name') : null
@@ -45,9 +46,11 @@ const MsgContainer = () => {
         }
       });
     }
+
     // TODO: 스트릭트 모드
+
     const socketClientInstance =
-      roomName != null ? new SocketClient(roomName, 'msgContainer') : null;
+      roomName != null ? new SocketClient(roomName, client?.uuid) : null;
     void socketClientInstance?.connect();
     setSocketClient(socketClientInstance);
 
