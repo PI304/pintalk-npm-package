@@ -92,7 +92,7 @@ function __generator(thisArg, body) {
     }
 }
 
-___$insertStyle("@font-face {\n  font-family: \"Pretendard\";\n  src: url(\"https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Medium.eot\");\n  src: url(\"https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Medium.eot?#iefix\") format(\"embedded-opentype\"), url(\"https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Medium.woff2\") format(\"woff2\"), url(\"https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Medium.woff\") format(\"woff\"), url(\"https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Medium.ttf\") format(\"truetype\");\n  font-display: swap;\n}\n.MsgContainerHeader {\n  background-color: #ffffff;\n  height: 8.8%;\n  top: 0;\n  left: 0;\n  box-shadow: 0 4px 4px rgba(222, 222, 222, 0.2);\n  border-radius: 10px 10px 0 0;\n}\n\n.MsgContainerHeaderLogo {\n  width: 15%;\n  display: flex;\n  justify-content: center;\n  height: 1.12rem;\n  align-items: center;\n  padding: 1.1rem 0 1.1rem 0;\n  float: left;\n}\n\n.MsgContainerHeaderContent {\n  width: 70%;\n  height: 100%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  float: left;\n}\n\n.MsgContainerHeaderText {\n  font-family: \"Pretendard\", serif;\n  font-style: normal;\n  font-weight: 600;\n  font-size: 1rem;\n  line-height: 150%;\n  letter-spacing: -0.02em;\n  text-align: center;\n  margin: 0 0.3rem 0 0;\n  color: #404040;\n}\n\n.MsgContainerHeaderOnOff {\n  font-family: \"Pretendard\", serif;\n  font-style: normal;\n  font-weight: 500;\n  font-size: 0.675rem;\n  line-height: 150%;\n  letter-spacing: -0.02em;\n  display: flex;\n  text-align: center;\n  justify-content: center;\n  align-items: center;\n  margin: 0 0 0 0.3rem;\n  float: right;\n  color: #626262;\n  width: 3.43125rem;\n  height: 1.40625rem;\n  border: 0.04rem solid #DDDDDD;\n  border-radius: 2.25rem;\n}\n\n.MsgContainerHeaderMenu {\n  width: 15%;\n  display: flex;\n  justify-content: center;\n  height: 1.12rem;\n  right: 0;\n  align-items: center;\n  padding: 1.1rem 0 1.1rem 0;\n  float: left;\n}\n\n.MsgContainerFooter {\n  background-color: #ffffff;\n  height: 15.2%;\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  box-shadow: 0 4px 4px rgba(222, 222, 222, 0.2);\n  border-radius: 0 0 10px 10px;\n}\n\n.MsgContainerFooterTextBox {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin: 1.0125rem 1.125rem;\n  padding: 0.675rem 1.0125rem;\n  border: 1.5px solid #8BB7F2;\n  border-radius: 1rem;\n}\n\n.MsgContainerFooterText {\n  font-family: \"Pretendard\", serif;\n  font-style: normal;\n  font-weight: 500;\n  font-size: 0.8rem;\n  line-height: 150%;\n  letter-spacing: -0.02em;\n  color: #A7A7A7;\n  width: 90%;\n  float: left;\n  padding: 0 0.5rem 0 0;\n}\n.MsgContainerFooterText textarea {\n  width: 100%;\n  border: 0;\n  outline: none;\n  resize: none;\n}\n\n.MsgContainerFooterSendBtn {\n  font-family: \"Pretendard\", serif;\n  font-style: normal;\n  font-weight: 500;\n  font-size: 0.8rem;\n  line-height: 150%;\n  letter-spacing: -0.02em;\n  width: 10%;\n  float: left;\n}\n\n.MsgContainerMain {\n  width: 100%;\n  height: 76%;\n  text-align: center;\n}\n\n.MsgContainerMainDate {\n  font-family: \"Pretendard\", serif;\n  font-style: normal;\n  font-weight: 500;\n  font-size: 0.5625rem;\n  line-height: 150%;\n  letter-spacing: -0.02em;\n  background-color: #ffffff;\n  padding: 0.225rem 0.675rem;\n  text-align: center;\n  border: 0.04rem solid #DDDDDD;\n  border-radius: 2.25rem;\n  color: #626262;\n  display: inline-block;\n  margin: 0.9rem auto 0.9rem auto;\n}\n\n.WidgetContainer {\n  background-size: cover;\n  background-repeat: no-repeat;\n  background-position: center;\n  height: 100%;\n  width: 100%;\n  z-index: 1000;\n}\n\n.MsgContainer {\n  background-color: #f5f5f5;\n  width: 20.8125rem;\n  height: 38.25rem;\n  bottom: 100px;\n  right: 3rem;\n  position: absolute;\n  border-radius: 10px;\n  box-shadow: 0 4px 26px rgba(201, 201, 201, 0.25);\n  z-index: 1001;\n}");
+___$insertStyle("@charset \"UTF-8\";\n@font-face {\n  font-family: \"Pretendard\";\n  src: url(\"https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Medium.eot\");\n  src: url(\"https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Medium.eot?#iefix\") format(\"embedded-opentype\"), url(\"https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Medium.woff2\") format(\"woff2\"), url(\"https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Medium.woff\") format(\"woff\"), url(\"https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Medium.ttf\") format(\"truetype\");\n  font-display: swap;\n}\n.MsgContainerHeader {\n  background-color: #ffffff;\n  height: 8.8%;\n  top: 0;\n  left: 0;\n  box-shadow: 0 4px 4px rgba(222, 222, 222, 0.2);\n  border-radius: 10px 10px 0 0;\n}\n\n.MsgContainerHeaderLogo {\n  width: 15%;\n  display: flex;\n  justify-content: center;\n  height: 1.12rem;\n  align-items: center;\n  padding: 1.1rem 0 1.1rem 0;\n  float: left;\n}\n\n.MsgContainerHeaderContent {\n  width: 70%;\n  height: 100%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  float: left;\n}\n\n.MsgContainerHeaderText {\n  font-family: \"Pretendard\", serif;\n  font-style: normal;\n  font-weight: 600;\n  font-size: 1rem;\n  line-height: 150%;\n  letter-spacing: -0.02em;\n  text-align: center;\n  margin: 0 0.3rem 0 0;\n  color: #404040;\n}\n\n.MsgContainerHeaderOnOff {\n  font-family: \"Pretendard\", serif;\n  font-style: normal;\n  font-weight: 500;\n  font-size: 0.675rem;\n  line-height: 150%;\n  letter-spacing: -0.02em;\n  display: flex;\n  text-align: center;\n  justify-content: center;\n  align-items: center;\n  margin: 0 0 0 0.3rem;\n  float: right;\n  color: #626262;\n  width: 3.43125rem;\n  height: 1.40625rem;\n  border: 0.04rem solid #DDDDDD;\n  border-radius: 2.25rem;\n}\n\n.MsgContainerHeaderMenu {\n  width: 15%;\n  display: flex;\n  justify-content: center;\n  height: 1.12rem;\n  right: 0;\n  align-items: center;\n  padding: 1.1rem 0 1.1rem 0;\n  float: left;\n}\n\n.MsgContainerFooter {\n  background-color: #ffffff;\n  height: 15.2%;\n  position: absolute;\n  width: 100%;\n  bottom: 0;\n  box-shadow: 0 4px 4px rgba(222, 222, 222, 0.2);\n  border-radius: 0 0 10px 10px;\n}\n\n.MsgContainerFooterTextBox {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin: 1.0125rem 1.125rem;\n  padding: 0.675rem 1.0125rem;\n  border: 1.5px solid #8BB7F2;\n  border-radius: 1rem;\n}\n\n.MsgContainerFooterText {\n  font-family: \"Pretendard\", serif;\n  font-style: normal;\n  font-weight: 500;\n  font-size: 0.8rem;\n  line-height: 150%;\n  letter-spacing: -0.02em;\n  color: #A7A7A7;\n  width: 90%;\n  float: left;\n  padding: 0 0.5rem 0 0;\n}\n.MsgContainerFooterText textarea {\n  font-family: \"Pretendard\", serif;\n  font-style: normal;\n  font-weight: 500;\n  font-size: 0.8rem;\n  line-height: 150%;\n  letter-spacing: -0.02em;\n  width: 100%;\n  border: 0;\n  outline: none;\n  resize: none;\n}\n\n.MsgContainerFooterSendBtn {\n  font-family: \"Pretendard\", serif;\n  font-style: normal;\n  font-weight: 500;\n  font-size: 0.8rem;\n  line-height: 150%;\n  letter-spacing: -0.02em;\n  width: 10%;\n  float: left;\n}\n\n.MsgContainerMain {\n  width: 100%;\n  height: 76%;\n  text-align: center;\n  overflow-y: scroll;\n  overflow-x: hidden;\n  -ms-overflow-style: none; /* 인터넷 익스플로러 */\n  scrollbar-width: none; /* 파이어폭스 */\n  scroll-behavior: smooth;\n}\n\n.MsgContainerMain::-webkit-scrollbar {\n  display: none;\n}\n\n.MsgContainerMainDate {\n  font-family: \"Pretendard\", serif;\n  font-style: normal;\n  font-weight: 500;\n  font-size: 0.5625rem;\n  line-height: 150%;\n  letter-spacing: -0.02em;\n  background-color: #ffffff;\n  padding: 0.225rem 0.675rem;\n  text-align: center;\n  border: 0.04rem solid #DDDDDD;\n  border-radius: 2.25rem;\n  color: #626262;\n  display: inline-block;\n  margin: 0.9rem auto 0.9rem auto;\n}\n\n.SendMsgBox {\n  font-family: \"Pretendard\", serif;\n  font-style: normal;\n  font-weight: 500;\n  font-size: 0.8rem;\n  line-height: 150%;\n  letter-spacing: -0.02em;\n  color: #ffffff;\n  width: fit-content;\n  margin: 0.28rem 1.125rem;\n  box-shadow: 1px 4px 6px rgba(145, 145, 145, 0.1);\n  border-radius: 14px 14px 0px 14px;\n  padding: 0.5629rem 1.125rem;\n  background: linear-gradient(82.02deg, #2F80ED 11.93%, #2F80ED 11.94%, #70A0E0 104.3%);\n}\n\n.ReceivedMsgBox {\n  font-family: \"Pretendard\", serif;\n  font-style: normal;\n  font-weight: 500;\n  font-size: 0.8rem;\n  line-height: 150%;\n  letter-spacing: -0.02em;\n  color: #404040;\n  width: fit-content;\n  margin: 0.28rem 1.125rem;\n  border: 0.5px solid #DDDDDD;\n  box-shadow: 1px 4px 6px rgba(144, 144, 144, 0.1);\n  border-radius: 14px 14px 14px 0px;\n  padding: 0.5629rem 1.125rem;\n  background: #ffffff;\n}\n\n.MsgContainerRight {\n  width: 100%;\n  justify-content: end;\n  display: flex;\n}\n\n.MsgContainerLeft {\n  width: 100%;\n  justify-content: start;\n  display: flex;\n}\n\n.WidgetContainer {\n  background-size: cover;\n  background-repeat: no-repeat;\n  background-position: center;\n  height: 100%;\n  width: 100%;\n  z-index: 1000;\n}\n\n.MsgContainer {\n  background-color: #f5f5f5;\n  width: 20.8125rem;\n  height: 38.25rem;\n  bottom: 100px;\n  right: 3rem;\n  position: absolute;\n  border-radius: 10px;\n  box-shadow: 0 4px 26px rgba(201, 201, 201, 0.25);\n  z-index: 1001;\n}");
 
 var OpenLogo = (React__namespace.createElement("svg", { width: "100%", height: "100%", viewBox: "0 0 128 128", preserveAspectRatio: "none", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
     React__namespace.createElement("g", { filter: "url(#filter0_d_209_338)" },
@@ -190,11 +190,15 @@ var getCookie = function (name) {
     return value != null ? value[2] : null;
 };
 
+// import type React from 'react';
 var SocketClient = /** @class */ (function () {
-    function SocketClient(cookie, name) {
-        this.uri = cookie;
-        this.socket = null;
-        this.name = name;
+    // private readonly components: React.ReactNode[] = [];
+    function SocketClient(cookie, uuid) {
+        this.cookie = cookie;
+        this.uuid = uuid;
+        // this.components = [];
+        this.clientSocket = null;
+        this.statusSocket = null;
     }
     SocketClient.prototype.connect = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -202,23 +206,55 @@ var SocketClient = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, new Promise(function (resolve, reject) {
-                            _this.socket = new WebSocket("wss://api.pintalk.app/ws/chat/".concat(_this.uri, "/"));
-                            _this.socket.addEventListener('open', function () {
+                            var _a;
+                            _this.clientSocket = new WebSocket("wss://api.pintalk.app/ws/chat/".concat(_this.cookie, "/"));
+                            _this.clientSocket.addEventListener('open', function () {
                                 console.log('Socket connected');
                                 console.log(_this.name);
                                 resolve();
                             });
-                            _this.socket.addEventListener('error', function (error) {
+                            _this.clientSocket.addEventListener('error', function (error) {
                                 reject(error);
                             });
-                            _this.socket.addEventListener('close', function (event) {
-                                console.log('Socket disconnected', event.wasClean, event.code, event.reason);
+                            _this.clientSocket.addEventListener('close', function (event) {
+                                _this.clientSocket = null;
+                                console.log('client Socket disconnected', event.wasClean, event.code, event.reason);
                             });
-                            _this.socket.addEventListener('message', function (event) {
+                            var root = (_a = document.querySelector('.MsgContainerMain')) !== null && _a !== void 0 ? _a : document.createElement('div');
+                            // const roots = ReactDOM.createRoot(root);
+                            // console.log(roots);
+                            _this.clientSocket.addEventListener('message', function (event) {
                                 var data = JSON.parse(event.data);
-                                console.log(_this.name);
+                                var isHost = data.is_host;
+                                var msg = data.message;
                                 console.log('Socket received data:', data);
+                                var msgContainer = document.createElement('div');
+                                var msgBox = document.createElement('div');
+                                msgContainer.className =
+                                    isHost === true ? 'MsgContainerLeft' : 'MsgContainerRight';
+                                msgBox.innerHTML = msg;
+                                msgBox.className = isHost === true ? 'ReceivedMsgBox' : 'SendMsgBox';
+                                msgContainer.appendChild(msgBox);
+                                // this.components.forEach((el) => {
+                                //   roots.appendChild(el);
+                                // });
+                                // roots.render(component);
+                                root.appendChild(msgContainer);
+                                root.scrollTop = root.scrollHeight;
                             });
+                            if (_this.uuid !== undefined) {
+                                _this.statusSocket = new WebSocket("wss://api.pintalk.app/ws/status/".concat(_this.uuid, "/"));
+                                _this.statusSocket.addEventListener('open', function () {
+                                    console.log('status socket opened');
+                                });
+                                _this.statusSocket.addEventListener('error', function (error) {
+                                    reject(error);
+                                });
+                                _this.statusSocket.addEventListener('close', function (event) {
+                                    _this.statusSocket = null;
+                                    console.log('status Socket disconnected', event.wasClean, event.code, event.reason);
+                                });
+                            }
                         })];
                     case 1:
                         _a.sent();
@@ -233,7 +269,8 @@ var SocketClient = /** @class */ (function () {
         return now.toISOString().substring(0, 19);
     };
     SocketClient.prototype.sendMessage = function (data) {
-        if (this.socket != null && this.socket.readyState === WebSocket.OPEN) {
+        if (this.clientSocket != null &&
+            this.clientSocket.readyState === WebSocket.OPEN) {
             var message = JSON.stringify({
                 type: 'chat_message',
                 is_host: false,
@@ -241,22 +278,32 @@ var SocketClient = /** @class */ (function () {
                 datetime: this.getDatetime(),
             });
             console.log('Sending message:', message);
-            this.socket.send(message);
+            this.clientSocket.send(message);
         }
         else {
             console.log('Socket is not connected');
         }
     };
     SocketClient.prototype.disconnect = function () {
-        if (this.socket != null && this.socket.readyState === WebSocket.OPEN) {
-            this.socket.close();
-            this.socket = null;
+        var _a;
+        if (this.clientSocket != null &&
+            this.clientSocket.readyState === WebSocket.OPEN) {
+            this.clientSocket.close();
+            var message = JSON.stringify({
+                type: 'notice',
+                is_host: false,
+                message: 'offline',
+                datetime: this.getDatetime(),
+            });
+            (_a = this.statusSocket) === null || _a === void 0 ? void 0 : _a.send(message);
+            // this.statusSocket.close();
         }
     };
     return SocketClient;
 }());
 
 var MsgContainer = function () {
+    var client = React.useContext(Client);
     var attr = React.useContext(Attribute);
     var _a = React.useState(getCookie('name') != null ? getCookie('name') : null), roomName = _a[0], setRoomName = _a[1];
     var _b = React.useState(null), socketClient = _b[0], setSocketClient = _b[1];
@@ -298,7 +345,7 @@ var MsgContainer = function () {
             }); });
         }
         // TODO: 스트릭트 모드
-        var socketClientInstance = roomName != null ? new SocketClient(roomName, 'msgContainer') : null;
+        var socketClientInstance = roomName != null ? new SocketClient(roomName, client === null || client === void 0 ? void 0 : client.uuid) : null;
         void (socketClientInstance === null || socketClientInstance === void 0 ? void 0 : socketClientInstance.connect());
         setSocketClient(socketClientInstance);
         return function () {

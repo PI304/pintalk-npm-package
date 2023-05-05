@@ -8,3 +8,7 @@ type MsgContainerFooterProps = {
 type MsgContainerProps = {
   isOpen: boolean;
 };
+
+type ReceivedMsgBoxProps = {
+  receivedData: string;
+};

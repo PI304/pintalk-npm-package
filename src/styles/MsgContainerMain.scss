@@ -2,7 +2,17 @@
   width: 100%;
   height: 76%;
   text-align: center;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
+  scroll-behavior: smooth;
 }
+
+.MsgContainerMain::-webkit-scrollbar {
+  display: none;
+}
+
 
 .MsgContainerMainDate {
   @include regular05625;
@@ -15,3 +25,39 @@
   display: inline-block;
   margin: 0.9rem auto 0.9rem auto;
 }
+
+.SendMsgBox {
+  @include regular08;
+  color: #ffffff;
+  width: fit-content;
+  margin: 0.28rem 1.125rem;
+  box-shadow: 1px 4px 6px rgba(145, 145, 145, 0.1);
+  border-radius: 14px 14px 0 14px;
+  padding: 0.5629rem 1.125rem;
+  background: linear-gradient(82.02deg, #2F80ED 11.93%, #2F80ED 11.94%, #70A0E0 104.3%);
+}
+
+.ReceivedMsgBox {
+  @include regular08;
+  color: $black;
+  width: fit-content;
+  margin: 0.28rem 1.125rem;
+  border: 0.5px solid #DDDDDD;
+  box-shadow: 1px 4px 6px rgba(144, 144, 144, 0.1);
+  border-radius: 14px 14px 14px 0;
+  padding: 0.5629rem 1.125rem;
+  background: #ffffff;
+}
+
+.MsgContainerRight {
+  width: 100%;
+  justify-content: end;
+  display: flex;
+}
+
+.MsgContainerLeft {
+  width: 100%;
+  justify-content: start;
+  display: flex;
+}
+

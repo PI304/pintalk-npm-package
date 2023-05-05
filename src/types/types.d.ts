@@ -1,4 +1,5 @@
 type clientResult = {
+  uuid: string;
   serviceName: string;
 };
 
