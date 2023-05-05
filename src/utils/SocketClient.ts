@@ -86,6 +86,23 @@ export class SocketClient {
           reject(error);
         });
 
+        this.statusSocket.addEventListener('message', (event) => {
+          const data = JSON.parse(event.data);
+          console.log('status socket received:', data);
+
+          const isOnline = data.message === 'online';
+
+          const OnOff =
+            document.querySelector('.MsgContainerHeaderOnOff') ??
+            document.createElement('div');
+
+          const textNode = OnOff.childNodes[1];
+          textNode.nodeValue = isOnline ? '온라인' : '오프라인';
+
+          const color = isOnline ? '#71E07C' : '#DDDDDD';
+          OnOff.querySelector('svg circle')?.setAttribute('fill', color);
+        });
+
         this.statusSocket.addEventListener('close', (event) => {
           this.statusSocket = null;
           console.log(
@@ -129,14 +146,7 @@ export class SocketClient {
       this.clientSocket.readyState === WebSocket.OPEN
     ) {
       this.clientSocket.close();
-      const message = JSON.stringify({
-        type: 'notice',
-        is_host: false,
-        message: 'offline',
-        datetime: this.getDatetime(),
-      });
-      this.statusSocket?.send(message);
-      // this.statusSocket.close();
+      this.statusSocket?.close();
     }
   }
 }
