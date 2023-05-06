@@ -200,6 +200,8 @@ var MsgContainerFooter = function (_a) {
         color: hasValue ? '#2F80ED' : '#A7A7A7',
     };
     var onKeyPress = function (e) {
+        if (e.nativeEvent.isComposing)
+            return;
         if (e.key === 'Enter' && !e.shiftKey) {
             if (hasValue && roomName != null && socketClient != null) {
                 onSendMsg();

@@ -25,6 +25,7 @@ const MsgContainerFooter = ({
   };
 
   const onKeyPress: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
+    if (e.nativeEvent.isComposing) return;
     if (e.key === 'Enter' && !e.shiftKey) {
       if (hasValue && roomName != null && socketClient != null) {
         onSendMsg();
