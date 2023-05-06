@@ -8,6 +8,7 @@ export declare class SocketClient {
     private oldestMsgDatetime;
     private appendBack;
     private isInitialized;
+    private msgHeight;
     constructor(cookie: string, client: clientResult | undefined);
     connect(): Promise<void>;
     setAppendBack(appendBack: boolean): void;

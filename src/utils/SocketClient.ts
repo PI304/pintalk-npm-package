@@ -8,6 +8,7 @@ export class SocketClient {
   private oldestMsgDatetime: string | null;
   private appendBack: boolean;
   private isInitialized: boolean;
+  private msgHeight: number;
 
   // private readonly components: React.ReactNode[] = [];
 
@@ -20,18 +21,13 @@ export class SocketClient {
     this.oldestMsgDatetime = null;
     this.appendBack = true;
     this.isInitialized = false;
+    this.msgHeight = 0;
   }
 
   async connect() {
     const root =
       document.querySelector('.MsgContainerMain') ??
       document.createElement('div');
-
-    let scrollPosition = 0;
-
-    root.addEventListener('scroll', () => {
-      scrollPosition = root.scrollTop;
-    });
 
     await new Promise<void>((resolve, reject) => {
       this.clientSocket = new WebSocket(
@@ -61,7 +57,7 @@ export class SocketClient {
 
       this.clientSocket.addEventListener('message', (event) => {
         const data = JSON.parse(event.data);
-        if (data.data !== undefined) {
+        if (data.data) {
           // 다중 메시지
           const items = data.data;
           items.forEach((item: receivedMsg) => {
@@ -80,16 +76,20 @@ export class SocketClient {
 
               if (base) {
                 root.insertBefore(msgContainer, base.nextSibling);
-                root.scrollTo(0, scrollPosition);
+                this.msgHeight = this.msgHeight + msgContainer.offsetHeight;
+                root.scrollTop = this.msgHeight;
               }
             }
           });
           this.isInitialized = true;
           this.appendBack = true;
+          this.msgHeight = 0;
         } else {
-          // 단일 메시지
+          // 단일 메시지 - undefined
           const msgContainer = this.createMsgBox(data);
+          console.log(this.appendBack);
           if (this.appendBack) {
+            console.log(this.appendBack);
             root.appendChild(msgContainer);
             root.scrollTop = root.scrollHeight;
           }
@@ -242,7 +242,6 @@ export class SocketClient {
   }
 
   requestPastMessages() {
-    this.appendBack = false;
     if (
       this.clientSocket != null &&
       this.clientSocket.readyState === WebSocket.OPEN
@@ -250,6 +249,7 @@ export class SocketClient {
       const oldest = this.oldestMsgDatetime;
       this.oldestMsgDatetime = null;
       if (oldest !== null) {
+        this.appendBack = false;
         const message = JSON.stringify({
           type: 'request',
           is_host: false,
