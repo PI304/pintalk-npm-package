@@ -50,7 +50,7 @@ const MsgContainer = () => {
     // TODO: 스트릭트 모드
 
     const socketClientInstance =
-      roomName != null ? new SocketClient(roomName, client?.uuid) : null;
+      roomName != null ? new SocketClient(roomName, client) : null;
     void socketClientInstance?.connect();
     setSocketClient(socketClientInstance);
 
@@ -62,7 +62,7 @@ const MsgContainer = () => {
   return (
     <div className={'MsgContainer'}>
       <MsgContainerHeader />
-      <MsgContainerMain />
+      <MsgContainerMain socketClient={socketClient} />
       <MsgContainerFooter roomName={roomName} socketClient={socketClient} />
     </div>
   );

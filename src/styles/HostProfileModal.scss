@@ -1,0 +1,82 @@
+.Modal {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  z-index: 1;
+  display: flex;
+}
+
+.ModalContainer {
+  background-color: #FFFFFF;
+  box-shadow: 0 8px 15px rgba(186, 186, 186, 0.1);
+  border-radius: 10px;
+  width: 80%;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  margin: auto;
+  z-index: 1000;
+}
+
+.ModalCloseButton {
+  text-align: right;
+  width: 100%;
+
+  svg {
+    position: absolute;
+    right: 0.8rem;
+  }
+}
+
+.ModalProfileImg {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 70%;
+
+  img {
+    width: inherit;
+    border-radius: 70%;
+  }
+}
+
+
+.ModalServiceName {
+  @include regular1;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.3rem;
+}
+
+.ModalOnOff {
+  @include regular0675;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  float: right;
+  color: $gray;
+  width: 3.43125rem;
+  height: 1.40625rem;
+  border: 0.04rem solid #DDDDDD;
+  border-radius: 2.25rem;
+}
+
+.ModalDescription {
+  @include regular08;
+  color: #7b7b7b;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+}

@@ -1,6 +1,8 @@
 type clientResult = {
   uuid: string;
   serviceName: string;
+  profileImage: string;
+  description: string;
 };
 
 type attribute = {
@@ -11,4 +13,11 @@ type attribute = {
 
 type chatResult = {
   name: string;
+};
+
+type receivedMsg = {
+  type: string;
+  message: string;
+  is_host: boolean;
+  datetime: string;
 };

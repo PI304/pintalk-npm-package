@@ -16,6 +16,7 @@ const MsgContainerFooter = ({
   };
   const onSendMsg = () => {
     socketClient?.sendMessage(message);
+    setMessage('');
   };
 
   const btnTextColor = {

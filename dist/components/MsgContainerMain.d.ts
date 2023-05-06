@@ -1,3 +1,4 @@
 /// <reference types="react" />
-declare const MsgContainerMain: () => JSX.Element;
+import { type MsgContainerMainProps } from '../types/props';
+declare const MsgContainerMain: ({ socketClient }: MsgContainerMainProps) => JSX.Element;
 export default MsgContainerMain;
