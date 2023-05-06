@@ -49,6 +49,7 @@ const MsgContainer = () => {
 
     // TODO: 스트릭트 모드
 
+    console.log(client);
     const socketClientInstance =
       roomName != null ? new SocketClient(roomName, client) : null;
     void socketClientInstance?.connect();
