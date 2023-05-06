@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { type KeyboardEventHandler, useState } from 'react';
 import { type MsgContainerFooterProps } from '../types/props';
 
 const MsgContainerFooter = ({
@@ -17,10 +17,19 @@ const MsgContainerFooter = ({
   const onSendMsg = () => {
     socketClient?.sendMessage(message);
     setMessage('');
+    setHasValue(false);
   };
 
   const btnTextColor = {
     color: hasValue ? '#2F80ED' : '#A7A7A7',
+  };
+
+  const onKeyPress: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      if (hasValue && roomName != null && socketClient != null) {
+        onSendMsg();
+      }
+    }
   };
 
   return (
@@ -29,6 +38,7 @@ const MsgContainerFooter = ({
         <div className={'MsgContainerFooterText'}>
           <textarea
             value={message}
+            onKeyDown={onKeyPress}
             onChange={onChangeMsgValue}
             placeholder={'메시지 작성하기'}
           />

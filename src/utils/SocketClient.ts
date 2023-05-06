@@ -154,13 +154,12 @@ export class SocketClient {
     const isHost = data.is_host;
     const datetime = data.datetime;
 
-    // if (this.oldestMsgDatetime === null) this.oldestMsgDatetime = datetime;
-
     const timeStamp = this.formatTimeStamp(datetime);
     const msg = data.message;
+    const formatMsg = msg.replace(/\n/g, '<br/>');
     console.log('Socket received data:', data);
 
-    return this.createElement(isHost, timeStamp, msg);
+    return this.createElement(isHost, timeStamp, formatMsg);
   }
 
   createElement(isHost: boolean, timeStamp: string, msg: string) {
@@ -250,14 +249,16 @@ export class SocketClient {
     ) {
       const oldest = this.oldestMsgDatetime;
       this.oldestMsgDatetime = null;
-      const message = JSON.stringify({
-        type: 'request',
-        is_host: false,
-        message: oldest,
-        datetime: this.getDatetime(),
-      });
-      console.log('Requesting past messages:', message);
-      this.clientSocket.send(message);
+      if (oldest !== null) {
+        const message = JSON.stringify({
+          type: 'request',
+          is_host: false,
+          message: oldest,
+          datetime: this.getDatetime(),
+        });
+        console.log('Requesting past messages:', message);
+        this.clientSocket.send(message);
+      }
     } else {
       console.log('Socket is not connected');
     }
