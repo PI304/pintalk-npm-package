@@ -12,3 +12,12 @@ type MsgContainerProps = {
 type ReceivedMsgBoxProps = {
   receivedData: string;
 };
+
+type HostProfileModalProps = {
+  setModalOpen: (modalOpen: boolean) => void;
+  status: boolean;
+};
+
+type MsgContainerMainProps = {
+  socketClient: SocketClient | null;
+};

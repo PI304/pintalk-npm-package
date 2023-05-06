@@ -1,31 +1,44 @@
-// import type React from 'react';
-// import ReactDOM from 'react-dom/client';
-// import ReceivedMsgBox from '../components/ReceivedMsgBox';
-// import SendMsgBox from '../components/SendMsgBox';
-
 export class SocketClient {
   private clientSocket: WebSocket | null;
   private statusSocket: WebSocket | null;
   private readonly cookie: string;
   private readonly uuid: string | undefined;
   private readonly name: string;
+  private readonly client: clientResult | undefined;
+  private oldestMsgDatetime: string | null;
+  private appendBack: boolean;
+  private isInitialized: boolean;
 
   // private readonly components: React.ReactNode[] = [];
 
-  constructor(cookie: string, uuid: string | undefined) {
+  constructor(cookie: string, client: clientResult | undefined) {
     this.cookie = cookie;
-    this.uuid = uuid;
-    // this.components = [];
+    this.uuid = client?.uuid;
+    this.client = client;
     this.clientSocket = null;
     this.statusSocket = null;
+    this.oldestMsgDatetime = null;
+    this.appendBack = true;
+    this.isInitialized = false;
   }
 
   async connect() {
+    const root =
+      document.querySelector('.MsgContainerMain') ??
+      document.createElement('div');
+
+    let scrollPosition = 0;
+
+    root.addEventListener('scroll', () => {
+      scrollPosition = root.scrollTop;
+    });
+
     await new Promise<void>((resolve, reject) => {
       this.clientSocket = new WebSocket(
         `wss://api.pintalk.app/ws/chat/${this.cookie}/`
       );
 
+      // open event
       this.clientSocket.addEventListener('open', () => {
         console.log('Socket connected');
         console.log(this.name);
@@ -46,31 +59,41 @@ export class SocketClient {
         );
       });
 
-      const root =
-        document.querySelector('.MsgContainerMain') ??
-        document.createElement('div');
-      // const roots = ReactDOM.createRoot(root);
-      // console.log(roots);
-
       this.clientSocket.addEventListener('message', (event) => {
         const data = JSON.parse(event.data);
-        const isHost = data.is_host;
-        const msg = data.message;
-        console.log('Socket received data:', data);
+        if (data.data !== undefined) {
+          // 다중 메시지
+          const items = data.data;
+          items.forEach((item: receivedMsg) => {
+            const msgContainer = this.createMsgBox(item);
+            if (this.appendBack) {
+              // 초기 소켓 연결 시 메시지 수신하는 경우
+              if (this.oldestMsgDatetime === null)
+                this.oldestMsgDatetime = item.datetime;
+              console.log(this.appendBack);
+              root.appendChild(msgContainer);
+              root.scrollTop = root.scrollHeight;
+            } else {
+              // request 로 과거 메시지 수신하는 경우
+              this.oldestMsgDatetime = item.datetime;
+              const base = root.firstChild;
 
-        const msgContainer = document.createElement('div');
-        const msgBox = document.createElement('div');
-
-        msgContainer.className =
-          isHost === true ? 'MsgContainerLeft' : 'MsgContainerRight';
-
-        msgBox.innerHTML = msg;
-        msgBox.className = isHost === true ? 'ReceivedMsgBox' : 'SendMsgBox';
-
-        msgContainer.appendChild(msgBox);
-
-        root.appendChild(msgContainer);
-        root.scrollTop = root.scrollHeight;
+              if (base) {
+                root.insertBefore(msgContainer, base.nextSibling);
+                root.scrollTo(0, scrollPosition);
+              }
+            }
+          });
+          this.isInitialized = true;
+          this.appendBack = true;
+        } else {
+          // 단일 메시지
+          const msgContainer = this.createMsgBox(data);
+          if (this.appendBack) {
+            root.appendChild(msgContainer);
+            root.scrollTop = root.scrollHeight;
+          }
+        }
       });
 
       if (this.uuid !== undefined) {
@@ -101,6 +124,9 @@ export class SocketClient {
 
           const color = isOnline ? '#71E07C' : '#DDDDDD';
           OnOff.querySelector('svg circle')?.setAttribute('fill', color);
+
+          const ModalOnOff = document.querySelector('.ModalOnOff');
+          ModalOnOff?.querySelector('svg circle')?.setAttribute('fill', color);
         });
 
         this.statusSocket.addEventListener('close', (event) => {
@@ -116,10 +142,86 @@ export class SocketClient {
     });
   }
 
+  setAppendBack(appendBack: boolean) {
+    this.appendBack = appendBack;
+  }
+
+  getIsInitialized() {
+    return this.isInitialized;
+  }
+
+  createMsgBox(data: receivedMsg) {
+    const isHost = data.is_host;
+    const datetime = data.datetime;
+
+    // if (this.oldestMsgDatetime === null) this.oldestMsgDatetime = datetime;
+
+    const timeStamp = this.formatTimeStamp(datetime);
+    const msg = data.message;
+    console.log('Socket received data:', data);
+
+    return this.createElement(isHost, timeStamp, msg);
+  }
+
+  createElement(isHost: boolean, timeStamp: string, msg: string) {
+    const msgContainer = document.createElement('div');
+    const msgBox = document.createElement('div');
+
+    msgContainer.className = isHost ? 'MsgContainerLeft' : 'MsgContainerRight';
+
+    msgBox.innerHTML = msg;
+    msgBox.className = isHost ? 'ReceivedMsgBox' : 'SendMsgBox';
+
+    const msgTimeStamp = document.createElement('div');
+    msgTimeStamp.className = 'MsgTimeStamp';
+
+    const msgTimeStampText = document.createElement('div');
+    msgTimeStamp.appendChild(msgTimeStampText);
+    msgTimeStampText.innerHTML = timeStamp;
+
+    if (msgBox.className === 'ReceivedMsgBox') {
+      const hostProfile = document.createElement('div');
+      hostProfile.className = 'HostProfileBox';
+
+      const ProfileImg = document.createElement('img');
+      ProfileImg.src =
+        this.client?.profileImage != null
+          ? this.client?.profileImage
+          : 'https://www.figma.com/file/FfkwfY2NPbl4eufVPM5CLD/PinTalk_UI?node-id=209-209&t=jiqk5vYLsJX8R75e-4';
+
+      hostProfile.appendChild(ProfileImg);
+      msgContainer.appendChild(hostProfile);
+
+      msgContainer.appendChild(msgBox);
+      msgContainer.appendChild(msgTimeStamp);
+    } else if (msgBox.className === 'SendMsgBox') {
+      msgContainer.appendChild(msgTimeStamp);
+      msgContainer.appendChild(msgBox);
+    }
+
+    return msgContainer;
+  }
+
   getDatetime() {
     const now = new Date();
     now.setHours(now.getHours() + 9);
     return now.toISOString().substring(0, 19);
+  }
+
+  formatTimeStamp(datetime: string) {
+    const date: Date = new Date(datetime);
+
+    // 시간을 12시간제로 변환
+    let hours: number = date.getHours();
+    const ampm: string = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+    const min =
+      date.getMinutes().toString().length === 1
+        ? '0' + date.getMinutes().toString()
+        : date.getMinutes().toString();
+    // 변환된 시간 문자열
+    const timeString: string = `${ampm} ${hours}:${min}`;
+    return timeString;
   }
 
   sendMessage(data: any) {
@@ -134,6 +236,27 @@ export class SocketClient {
         datetime: this.getDatetime(),
       });
       console.log('Sending message:', message);
+      this.clientSocket.send(message);
+    } else {
+      console.log('Socket is not connected');
+    }
+  }
+
+  requestPastMessages() {
+    this.appendBack = false;
+    if (
+      this.clientSocket != null &&
+      this.clientSocket.readyState === WebSocket.OPEN
+    ) {
+      const oldest = this.oldestMsgDatetime;
+      this.oldestMsgDatetime = null;
+      const message = JSON.stringify({
+        type: 'request',
+        is_host: false,
+        message: oldest,
+        datetime: this.getDatetime(),
+      });
+      console.log('Requesting past messages:', message);
       this.clientSocket.send(message);
     } else {
       console.log('Socket is not connected');
