@@ -25,9 +25,8 @@ const MsgContainerMain = ({ socketClient }: MsgContainerMainProps) => {
     <div className={'MsgContainerMain'}>
       <div
         style={{
-          backgroundColor: 'black',
           width: '100%',
-          height: '10px',
+          height: '0.3rem',
         }}
         ref={targetRef}
       ></div>
