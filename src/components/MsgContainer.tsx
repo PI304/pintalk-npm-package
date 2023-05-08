@@ -11,7 +11,7 @@ const MsgContainer = () => {
   const client = useContext(Client);
   const attr = useContext(Attribute);
   const [roomName, setRoomName] = useState<string | null>(
-    getCookie('name') != null ? getCookie('name') : null
+    getCookie('pintalk') != null ? getCookie('pintalk') : null
   );
   const [socketClient, setSocketClient] = useState<SocketClient | null>(null);
 
@@ -41,8 +41,8 @@ const MsgContainer = () => {
     if (roomName == null) {
       void createChat().then(async (r: AxiosResponse<chatResult>) => {
         if (r != null) {
-          setCookie('name', r.data.name, 7);
-          setRoomName(getCookie('name'));
+          setCookie('pintalk', r.data.name, 7);
+          setRoomName(getCookie('pintalk'));
         }
       });
     }

@@ -10,8 +10,6 @@ export class SocketClient {
   private isInitialized: boolean;
   private msgHeight: number;
 
-  // private readonly components: React.ReactNode[] = [];
-
   constructor(cookie: string, client: clientResult | undefined) {
     this.cookie = cookie;
     this.uuid = client?.uuid;
