@@ -15,7 +15,9 @@ const MsgContainerFooter = ({
     else setHasValue(false);
   };
   const onSendMsg = () => {
-    socketClient?.sendMessage(message);
+    if (message?.trim() !== '') {
+      socketClient?.sendMessage(message);
+    }
     setMessage('');
     setHasValue(false);
   };

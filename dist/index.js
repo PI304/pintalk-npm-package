@@ -15,7 +15,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var React = require('react');
 var axios = require('axios');
-var ReactDOM = require('react-dom');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -38,9 +37,7 @@ function _interopNamespace(e) {
 }
 
 var React__namespace = /*#__PURE__*/_interopNamespace(React);
-var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var axios__default = /*#__PURE__*/_interopDefaultLegacy(axios);
-var ReactDOM__default = /*#__PURE__*/_interopDefaultLegacy(ReactDOM);
 
 /******************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -195,7 +192,9 @@ var MsgContainerFooter = function (_a) {
             setHasValue(false);
     };
     var onSendMsg = function () {
-        socketClient === null || socketClient === void 0 ? void 0 : socketClient.sendMessage(message);
+        if ((message === null || message === void 0 ? void 0 : message.trim()) !== '') {
+            socketClient === null || socketClient === void 0 ? void 0 : socketClient.sendMessage(message);
+        }
         setMessage('');
         setHasValue(false);
     };
@@ -256,7 +255,6 @@ var getCookie = function (name) {
 };
 
 var SocketClient = /** @class */ (function () {
-    // private readonly components: React.ReactNode[] = [];
     function SocketClient(cookie, client) {
         this.cookie = cookie;
         this.uuid = client === null || client === void 0 ? void 0 : client.uuid;
@@ -383,8 +381,7 @@ var SocketClient = /** @class */ (function () {
         return this.createElement(isHost, timeStamp, formatMsg);
     };
     SocketClient.prototype.createElement = function (isHost, timeStamp, msg) {
-        var _a, _b, _c;
-        var root = (_a = document.querySelector('.MsgContainerMain')) !== null && _a !== void 0 ? _a : document.createElement('div');
+        var _a, _b;
         var msgContainer = document.createElement('div');
         var msgBox = document.createElement('div');
         msgContainer.className = isHost ? 'MsgContainerLeft' : 'MsgContainerRight';
@@ -400,13 +397,9 @@ var SocketClient = /** @class */ (function () {
             hostProfile.className = 'HostProfileBox';
             var ProfileImg = document.createElement('img');
             ProfileImg.src =
-                ((_b = this.client) === null || _b === void 0 ? void 0 : _b.profileImage) != null
-                    ? (_c = this.client) === null || _c === void 0 ? void 0 : _c.profileImage
+                ((_a = this.client) === null || _a === void 0 ? void 0 : _a.profileImage) != null
+                    ? (_b = this.client) === null || _b === void 0 ? void 0 : _b.profileImage
                     : 'https://www.figma.com/file/FfkwfY2NPbl4eufVPM5CLD/PinTalk_UI?node-id=209-209&t=jiqk5vYLsJX8R75e-4';
-            hostProfile.addEventListener('click', function () {
-                var modal = React__default["default"].createElement(HostProfileModal);
-                ReactDOM__default["default"].render(modal, root);
-            });
             hostProfile.appendChild(ProfileImg);
             msgContainer.appendChild(hostProfile);
             msgContainer.appendChild(msgBox);
