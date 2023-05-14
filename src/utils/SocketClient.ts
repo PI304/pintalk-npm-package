@@ -24,12 +24,12 @@ export class SocketClient {
 
   async connect() {
     const root =
-      document.querySelector('.MsgContainerMain') ??
-      document.createElement('div');
+        document.querySelector('.MsgContainerMain') ??
+        document.createElement('div');
 
     await new Promise<void>((resolve, reject) => {
       this.clientSocket = new WebSocket(
-        `wss://api.pintalk.app/ws/chat/${this.cookie}/`
+          `wss://api.pintalk.app/ws/chat/${this.cookie}/`
       );
 
       // open event
@@ -46,10 +46,10 @@ export class SocketClient {
       this.clientSocket.addEventListener('close', (event) => {
         this.clientSocket = null;
         console.log(
-          'client Socket disconnected',
-          event.wasClean,
-          event.code,
-          event.reason
+            'client Socket disconnected',
+            event.wasClean,
+            event.code,
+            event.reason
         );
       });
 
@@ -96,7 +96,7 @@ export class SocketClient {
 
       if (this.uuid !== undefined) {
         this.statusSocket = new WebSocket(
-          `wss://api.pintalk.app/ws/status/${this.uuid}/`
+            `wss://api.pintalk.app/ws/status/${this.uuid}/`
         );
 
         this.statusSocket.addEventListener('open', () => {
@@ -114,8 +114,8 @@ export class SocketClient {
           const isOnline = data.message === 'online';
 
           const OnOff =
-            document.querySelector('.MsgContainerHeaderOnOff') ??
-            document.createElement('div');
+              document.querySelector('.MsgContainerHeaderOnOff') ??
+              document.createElement('div');
 
           const textNode = OnOff.childNodes[1];
           textNode.nodeValue = isOnline ? '온라인' : '오프라인';
@@ -130,10 +130,10 @@ export class SocketClient {
         this.statusSocket.addEventListener('close', (event) => {
           this.statusSocket = null;
           console.log(
-            'status Socket disconnected',
-            event.wasClean,
-            event.code,
-            event.reason
+              'status Socket disconnected',
+              event.wasClean,
+              event.code,
+              event.reason
           );
         });
       }
@@ -149,11 +149,15 @@ export class SocketClient {
   }
 
   createMsgBox(data: receivedMsg) {
+    const type = data.type;
     const isHost = data.is_host;
     const datetime = data.datetime;
 
     const timeStamp = this.formatTimeStamp(datetime);
-    const msg = data.message;
+    const msg =
+        type === 'notice' && data.message === 'closed' ?
+            '채팅이 종료되었습니다. 메시지를 전송하여 채팅을 다시 시작할 수 있습니다.'
+            : data.message;
     const formatMsg = msg.replace(/\n/g, '<br/>');
     console.log('Socket received data:', data);
 
@@ -182,9 +186,9 @@ export class SocketClient {
 
       const ProfileImg = document.createElement('img');
       ProfileImg.src =
-        this.client?.profileImage != null
-          ? this.client?.profileImage
-          : 'https://www.figma.com/file/FfkwfY2NPbl4eufVPM5CLD/PinTalk_UI?node-id=209-209&t=jiqk5vYLsJX8R75e-4';
+          this.client?.profileImage != null
+              ? this.client?.profileImage
+              : 'https://www.figma.com/file/FfkwfY2NPbl4eufVPM5CLD/PinTalk_UI?node-id=209-209&t=jiqk5vYLsJX8R75e-4';
 
       hostProfile.appendChild(ProfileImg);
       msgContainer.appendChild(hostProfile);
@@ -213,9 +217,9 @@ export class SocketClient {
     const ampm: string = hours >= 12 ? 'PM' : 'AM';
     hours = hours % 12 || 12;
     const min =
-      date.getMinutes().toString().length === 1
-        ? '0' + date.getMinutes().toString()
-        : date.getMinutes().toString();
+        date.getMinutes().toString().length === 1
+            ? '0' + date.getMinutes().toString()
+            : date.getMinutes().toString();
     // 변환된 시간 문자열
     const timeString: string = `${ampm} ${hours}:${min}`;
     return timeString;
@@ -223,8 +227,8 @@ export class SocketClient {
 
   sendMessage(data: any) {
     if (
-      this.clientSocket != null &&
-      this.clientSocket.readyState === WebSocket.OPEN
+        this.clientSocket != null &&
+        this.clientSocket.readyState === WebSocket.OPEN
     ) {
       const message = JSON.stringify({
         type: 'chat_message',
@@ -241,8 +245,8 @@ export class SocketClient {
 
   requestPastMessages() {
     if (
-      this.clientSocket != null &&
-      this.clientSocket.readyState === WebSocket.OPEN
+        this.clientSocket != null &&
+        this.clientSocket.readyState === WebSocket.OPEN
     ) {
       const oldest = this.oldestMsgDatetime;
       this.oldestMsgDatetime = null;
@@ -264,8 +268,8 @@ export class SocketClient {
 
   disconnect() {
     if (
-      this.clientSocket != null &&
-      this.clientSocket.readyState === WebSocket.OPEN
+        this.clientSocket != null &&
+        this.clientSocket.readyState === WebSocket.OPEN
     ) {
       this.clientSocket.close();
       this.statusSocket?.close();

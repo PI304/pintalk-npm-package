@@ -30,7 +30,7 @@ const MsgContainerMain = ({ socketClient }: MsgContainerMainProps) => {
         }}
         ref={targetRef}
       ></div>
-      <span className={'MsgContainerMainDate'}>3/15(수)</span>
+      <div className={'MsgContainerMainDate'}>3/15(수)</div>
     </div>
   );
 };

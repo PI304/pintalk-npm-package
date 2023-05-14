@@ -1,7 +1,6 @@
 .MsgContainerMain {
   width: 100%;
   height: 76%;
-  text-align: center;
   overflow-y: scroll;
   overflow-x: hidden;
   -ms-overflow-style: none; /* 인터넷 익스플로러 */
@@ -13,17 +12,18 @@
   display: none;
 }
 
-
 .MsgContainerMainDate {
   @include regular05625;
+  display: flex;
+  justify-content: center;
+  width: fit-content;
   background-color: #ffffff;
   padding: 0.225rem 0.675rem;
   text-align: center;
   border: 0.04rem solid #DDDDDD;
   border-radius: 2.25rem;
   color: $gray;
-  display: inline-block;
-  margin: 0.9rem auto 0.9rem auto;
+  margin: 0.6rem auto 0.9rem auto;
 }
 
 .SendMsgBox {
@@ -39,7 +39,7 @@
 }
 
 .ReceivedMsgBox {
-  max-width: 65%;
+  max-width: 50%;
   @include regular08;
   color: $black;
   width: fit-content;
@@ -58,7 +58,6 @@
 }
 
 .MsgContainerLeft {
-  align-items: center;
   width: 100%;
   justify-content: start;
   display: flex;
