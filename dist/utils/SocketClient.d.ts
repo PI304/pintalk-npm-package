@@ -1,3 +1,4 @@
+import { type Dispatch, type SetStateAction } from 'react';
 export declare class SocketClient {
     private clientSocket;
     private statusSocket;
@@ -9,7 +10,8 @@ export declare class SocketClient {
     private appendBack;
     private isInitialized;
     private msgHeight;
-    constructor(cookie: string, client: clientResult | undefined);
+    private readonly setRoomName;
+    constructor(cookie: string, client: clientResult | undefined, setRoomName: Dispatch<SetStateAction<string | null>>);
     connect(): Promise<void>;
     setAppendBack(appendBack: boolean): void;
     getIsInitialized(): boolean;

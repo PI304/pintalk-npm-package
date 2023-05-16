@@ -2,31 +2,32 @@ import * as React from 'react';
 import MsgContainerHeader from './MsgContainerHeader';
 import MsgContainerFooter from './MsgContainerFooter';
 import MsgContainerMain from './MsgContainerMain';
-import { useContext, useEffect, useState } from 'react';
-import { SocketClient, getCookie, setCookie } from '../utils';
-import axios, { type AxiosResponse } from 'axios';
-import { Attribute, Client } from '../index';
+import {useContext, useEffect, useState} from 'react';
+import {SocketClient, getCookie, setCookie} from '../utils';
+import axios, {type AxiosResponse} from 'axios';
+import {Attribute, Client} from '../index';
 
 const MsgContainer = () => {
   const client = useContext(Client);
   const attr = useContext(Attribute);
   const [roomName, setRoomName] = useState<string | null>(
-    getCookie('pintalk') != null ? getCookie('pintalk') : null
+      getCookie('pintalk') != null ? getCookie('pintalk') : null
   );
   const [socketClient, setSocketClient] = useState<SocketClient | null>(null);
 
+  console.log(client);
   const createChat = async () => {
     try {
       return await axios.post(
-        'https://api.pintalk.app/api/chat/',
-        {},
-        {
-          headers: {
-            Accept: 'application/json; version=1',
-            'X-PinTalk-Access-Key': attr?.accessKey,
-            'X-PinTalk-Secret-Key': attr?.secretKey,
-          },
-        }
+          'https://api.pintalk.app/api/chat/',
+          {},
+          {
+            headers: {
+              Accept: 'application/json; version=1',
+              'X-PinTalk-Access-Key': attr?.accessKey,
+              'X-PinTalk-Secret-Key': attr?.secretKey,
+            },
+          }
       );
     } catch (error) {
       console.log(error);
@@ -50,7 +51,7 @@ const MsgContainer = () => {
     // TODO: 스트릭트 모드
 
     const socketClientInstance =
-      roomName != null ? new SocketClient(roomName, client) : null;
+        roomName != null ? new SocketClient(roomName, client, setRoomName) : null;
     void socketClientInstance?.connect();
     setSocketClient(socketClientInstance);
 
@@ -60,11 +61,11 @@ const MsgContainer = () => {
   }, [roomName]);
 
   return (
-    <div className={'MsgContainer'}>
-      <MsgContainerHeader />
-      <MsgContainerMain socketClient={socketClient} />
-      <MsgContainerFooter roomName={roomName} socketClient={socketClient} />
-    </div>
+      <div className={'MsgContainer'}>
+        <MsgContainerHeader/>
+        <MsgContainerMain socketClient={socketClient}/>
+        <MsgContainerFooter roomName={roomName} socketClient={socketClient}/>
+      </div>
   );
 };
 
