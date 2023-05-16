@@ -316,6 +316,9 @@ var SocketClient = /** @class */ (function () {
                                             }
                                         });
                                     }
+                                    if (event.code === 4003) {
+                                        console.error('설정한 서비스 도메인과 실제 Origin 이 일치하지 않습니다.');
+                                    }
                                     console.log('client Socket disconnected', event.wasClean, event.code, event.reason);
                                 });
                                 _this.clientSocket.addEventListener('message', function (event) {
@@ -383,6 +386,9 @@ var SocketClient = /** @class */ (function () {
                                     _this.statusSocket.addEventListener('close', function (event) {
                                         _this.statusSocket = null;
                                         console.log('status Socket disconnected', event.wasClean, event.code, event.reason);
+                                        if (event.code === 4003) {
+                                            console.error('설정한 서비스 도메인과 실제 Origin 이 일치하지 않습니다.');
+                                        }
                                     });
                                 }
                             })];
