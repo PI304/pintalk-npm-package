@@ -22,7 +22,9 @@ const MsgContainerHeader = () => {
         <div className={'MsgContainerHeaderLogo'}>{HeaderLogo}</div>
         <div className={'MsgContainerHeaderContent'}>
           <div className={'MsgContainerHeaderText'} onClick={onShowModal}>
-            <div className={'MsgContainerHeaderOnOff'}>{OnCircle}온라인</div>
+            {client?.configs.useOnlineStatus && (
+              <div className={'MsgContainerHeaderOnOff'}>{OnCircle}온라인</div>
+            )}
             {client?.serviceName}
           </div>
         </div>

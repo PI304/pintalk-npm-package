@@ -11,6 +11,7 @@ export declare class SocketClient {
     private isInitialized;
     private msgHeight;
     private readonly setRoomName;
+    private readonly useOnlineStatus;
     constructor(cookie: string, client: clientResult | undefined, setRoomName: Dispatch<SetStateAction<string | null>>);
     connect(): Promise<void>;
     setAppendBack(appendBack: boolean): void;

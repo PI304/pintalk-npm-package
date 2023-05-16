@@ -172,9 +172,9 @@ var MsgContainerHeader = function () {
             React__namespace.createElement("div", { className: 'MsgContainerHeaderLogo' }, HeaderLogo),
             React__namespace.createElement("div", { className: 'MsgContainerHeaderContent' },
                 React__namespace.createElement("div", { className: 'MsgContainerHeaderText', onClick: onShowModal },
-                    React__namespace.createElement("div", { className: 'MsgContainerHeaderOnOff' },
+                    (client === null || client === void 0 ? void 0 : client.configs.useOnlineStatus) && (React__namespace.createElement("div", { className: 'MsgContainerHeaderOnOff' },
                         OnCircle,
-                        "\uC628\uB77C\uC778"), client === null || client === void 0 ? void 0 :
+                        "\uC628\uB77C\uC778")), client === null || client === void 0 ? void 0 :
                     client.serviceName)),
             React__namespace.createElement("div", { className: 'MsgContainerHeaderMenu' })),
         modalOpen && (React__namespace.createElement(HostProfileModal, { setModalOpen: setModalOpen, status: isOnline }))));
@@ -261,6 +261,7 @@ var SocketClient = /** @class */ (function () {
     function SocketClient(cookie, client, setRoomName) {
         this.cookie = cookie;
         this.uuid = client === null || client === void 0 ? void 0 : client.uuid;
+        this.useOnlineStatus = client === null || client === void 0 ? void 0 : client.configs.useOnlineStatus;
         this.client = client;
         this.clientSocket = null;
         this.statusSocket = null;
@@ -358,7 +359,7 @@ var SocketClient = /** @class */ (function () {
                                         }
                                     }
                                 });
-                                if (_this.uuid !== undefined) {
+                                if (_this.uuid !== undefined && _this.useOnlineStatus === true) {
                                     _this.statusSocket = new WebSocket("wss://api.pintalk.app/ws/status/".concat(_this.uuid, "/"));
                                     _this.statusSocket.addEventListener('open', function () {
                                         console.log('status socket opened');

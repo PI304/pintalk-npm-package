@@ -1,3 +1,4 @@
+import type React from 'react';
 import { type Dispatch, type SetStateAction } from 'react';
 import { deleteCookie, getCookie } from './cookie';
 
@@ -16,6 +17,8 @@ export class SocketClient {
     React.SetStateAction<string | null>
   >;
 
+  private readonly useOnlineStatus: boolean | undefined;
+
   constructor(
     cookie: string,
     client: clientResult | undefined,
@@ -23,6 +26,7 @@ export class SocketClient {
   ) {
     this.cookie = cookie;
     this.uuid = client?.uuid;
+    this.useOnlineStatus = client?.configs.useOnlineStatus;
     this.client = client;
     this.clientSocket = null;
     this.statusSocket = null;
@@ -132,7 +136,7 @@ export class SocketClient {
         }
       });
 
-      if (this.uuid !== undefined) {
+      if (this.uuid !== undefined && this.useOnlineStatus === true) {
         this.statusSocket = new WebSocket(
           `wss://api.pintalk.app/ws/status/${this.uuid}/`
         );

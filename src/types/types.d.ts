@@ -1,8 +1,13 @@
 type clientResult = {
+  configs: configs;
   uuid: string;
   serviceName: string;
   profileImage: string;
   description: string;
+};
+
+type configs = {
+  useOnlineStatus: boolean;
 };
 
 type attribute = {
